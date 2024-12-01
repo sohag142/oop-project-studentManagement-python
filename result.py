@@ -21,8 +21,10 @@ class Result:
         self.var_course=StringVar()
         self.var_marks=StringVar()
         self.var_full_marks=StringVar()
-        self.roll_list=[]
-        self.fetch_roll()
+        #self.roll_list=[]
+        #self.fetch_roll()
+        self.course_list=[""]
+        self.fetch_course()
 
         lbl_select=Label(self.root,text="Select Student",font=("goudy old style",20,"bold"),bg="white").place(x=50,y=100)
         lbl_name=Label(self.root,text="Name",font=("goudy old style",20,"bold"),bg="white").place(x=50,y=160)
@@ -30,16 +32,22 @@ class Result:
         lbl_marks_ob=Label(self.root,text="Marks Obtained",font=("goudy old style",20,"bold"),bg="white").place(x=50,y=280)
         lbl_full_marks=Label(self.root,text="Full Marks",font=("goudy old style",20,"bold"),bg="white").place(x=50,y=340)
 
-        self.txt_student=ttk.Combobox(self.root,textvariable=self.var_roll,values=self.roll_list,font=("goudy old style",15,"bold"),state='readonly',justify=CENTER)
+        """self.txt_student=ttk.Combobox(self.root,textvariable=self.var_roll,values=self.roll_list,font=("goudy old style",15,"bold"),state='readonly',justify=CENTER)
         self.txt_student.place(x=280,y=100,width=200)
-        self.txt_student.set("Select")
+        self.txt_student.set("Select")"""
         btn_search=Button(self.root,text="Search",command=self.search,font=("goudy old style",15,"bold"),bg="#03a9f4",fg="white",cursor="hand2").place(x=500,y=100,width=100,height=28)
 
+        txt_student = Entry(self.root, textvariable=self.var_roll, font=("goudy old style", 20, "bold"), bg="lightyellow").place(x=280,y=100,width=200)
         txt_name=Entry(self.root,textvariable=self.var_name,font=("goudy old style",20,"bold"),bg="lightyellow",state='readonly').place(x=280,y=160,width=320)
-        txt_course=Entry(self.root,textvariable=self.var_course,font=("goudy old style",20,"bold"),bg="lightyellow",state='readonly').place(x=280,y=220,width=320)
+        self.txt_course=ttk.Combobox(self.root,textvariable=self.var_course,values=self.course_list,font=("goudy old style",15,"bold"),state='readonly',justify=CENTER)
+        self.txt_course.place(x=280,y=220,width=320)
+        self.txt_course.set("Select")
+
+
+        #txt_course=Entry(self.root,textvariable=self.var_course,font=("goudy old style",20,"bold"),bg="lightyellow",state='readonly').place(x=280,y=220,width=320)
         txt_marks=Entry(self.root,textvariable=self.var_marks,font=("goudy old style",20,"bold"),bg="lightyellow").place(x=280,y=280,width=320)
         txt_full_marks=Entry(self.root,textvariable=self.var_full_marks,font=("goudy old style",20,"bold"),bg="lightyellow").place(x=280,y=340,width=320)
-        
+
         #---------------- buttons -------------------
         btn_add=Button(self.root,text="Submit",command=self.add,font=("goudy old style",15),bg="lightgreen",activebackground="lightgreen",cursor="hand2").place(x=300,y=420,width=120,height=35)
         btn_clear=Button(self.root,text="Clear",command=self.clear,font=("goudy old style",15),bg="lightgray",activebackground="lightgray",cursor="hand2").place(x=430,y=420,width=120,height=35)
@@ -52,6 +60,18 @@ class Result:
         self.lbl_bg=Label(self.root,image=self.bg_img).place(x=650,y=100)
 
 #-----------------------------------------------------------------------------------------------------------
+
+    def fetch_course(self):
+        con=sqlite3.connect(database="rms.db")
+        cur=con.cursor()
+        try:
+            cur.execute("select name from course")
+            rows=cur.fetchall()
+            if len(rows)>0:
+                for row in rows:
+                    self.course_list.append(row[0])
+        except Exception as ex:
+            messagebox.showerror("Error",f"Error due to: {str(ex)}")
 
     def fetch_roll(self):
         con=sqlite3.connect(database="rms.db")
@@ -69,11 +89,11 @@ class Result:
         con=sqlite3.connect(database="rms.db")
         cur=con.cursor()
         try:
-            cur.execute("select name,course from student where roll=?",(self.var_roll.get(),))
+            cur.execute("select name from student where roll=?",(self.var_roll.get(),))
             row=cur.fetchone()
             if row!=None:
                 self.var_name.set(row[0])
-                self.var_course.set(row[1])
+
             else:
                 messagebox.showerror("Error","No record found!!!",parent=self.root)
         except Exception as ex:
@@ -106,14 +126,14 @@ class Result:
             messagebox.showerror("Error",f"Error due to: {str(ex)}")
 
     def clear(self):
-        self.var_roll.set("Select")
+        self.var_roll.set("")
         self.var_name.set("")
-        self.var_course.set("")
+        self.var_course.set("Select")
         self.var_marks.set("")
         self.var_full_marks.set("")
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     root=Tk()
     obj=Result(root)
     root.mainloop()
