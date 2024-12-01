@@ -21,11 +21,11 @@ class Student:
         self.var_gender=StringVar()
         self.var_dob=StringVar()
         self.var_contact=StringVar()
-        self.var_course=StringVar()
+        self.var_NID=StringVar()
         self.var_a_date=StringVar()
-        self.var_state=StringVar()
+        self.var_country=StringVar()
         self.var_city=StringVar()
-        self.var_pin=StringVar()
+        self.var_zip=StringVar()
 
         #------------- widgets -----------------
         #--------- column 1 ---------------
@@ -33,15 +33,15 @@ class Student:
         lbl_name=Label(self.root,text="Name",font=("goudy old style",15,"bold"),bg="white").place(x=10,y=100)
         lbl_email=Label(self.root,text="Email",font=("goudy old style",15,"bold"),bg="white").place(x=10,y=140)
         lbl_gender=Label(self.root,text="Gender",font=("goudy old style",15,"bold"),bg="white").place(x=10,y=180)
-        lbl_state=Label(self.root,text="State",font=("goudy old style",15,"bold"),bg="white").place(x=10,y=220)
-        txt_state=Entry(self.root,textvariable=self.var_state,font=("goudy old style",15,"bold"),bg="lightyellow").place(x=150,y=220,width=150)
+        lbl_country=Label(self.root,text="Country",font=("goudy old style",15,"bold"),bg="white").place(x=10,y=220)
+        txt_country=Entry(self.root,textvariable=self.var_country,font=("goudy old style",15,"bold"),bg="lightyellow").place(x=150,y=220,width=150)
         lbl_city=Label(self.root,text="City",font=("goudy old style",15,"bold"),bg="white").place(x=310,y=220)
         txt_city=Entry(self.root,textvariable=self.var_city,font=("goudy old style",15,"bold"),bg="lightyellow").place(x=380,y=220,width=100)
-        lbl_pin=Label(self.root,text="Pin",font=("goudy old style",15,"bold"),bg="white").place(x=500,y=220)
-        txt_pin=Entry(self.root,textvariable=self.var_pin,font=("goudy old style",15,"bold"),bg="lightyellow").place(x=560,y=220,width=120)
-        
+        lbl_zip=Label(self.root,text="Zip",font=("goudy old style",15,"bold"),bg="white").place(x=500,y=220)
+        txt_zip=Entry(self.root,textvariable=self.var_zip,font=("goudy old style",15,"bold"),bg="lightyellow").place(x=560,y=220,width=120)
+
         lbl_address=Label(self.root,text="Address",font=("goudy old style",15,"bold"),bg="white").place(x=10,y=260)
-        
+
         #------------ entry fields -------------
         self.txt_roll=Entry(self.root,textvariable=self.var_roll,font=("goudy old style",15,"bold"),bg="lightyellow")
         self.txt_roll.place(x=150,y=60,width=200)
@@ -55,19 +55,20 @@ class Student:
         lbl_dob=Label(self.root,text="D.O.B.",font=("goudy old style",15,"bold"),bg="white").place(x=360,y=60)
         lbl_contact=Label(self.root,text="Contact",font=("goudy old style",15,"bold"),bg="white").place(x=360,y=100)
         lbl_admission=Label(self.root,text="Admission",font=("goudy old style",15,"bold"),bg="white").place(x=360,y=140)
-        lbl_course=Label(self.root,text="Course",font=("goudy old style",15,"bold"),bg="white").place(x=360,y=180)
-        
+        lbl_NID=Label(self.root,text="NID",font=("goudy old style",15,"bold"),bg="white").place(x=360,y=180)
+
         #------------ entry fields -------------
-        self.course_list=[""]
-        self.fetch_course()
+        #self.course_list=[""]
+        #self.fetch_course()
         # function call to update the list
         txt_dob=Entry(self.root,textvariable=self.var_dob,font=("goudy old style",15,"bold"),bg="lightyellow").place(x=480,y=60,width=200)
         txt_contact=Entry(self.root,textvariable=self.var_contact,font=("goudy old style",15,"bold"),bg="lightyellow").place(x=480,y=100,width=200)
         txt_admission=Entry(self.root,textvariable=self.var_a_date,font=("goudy old style",15,"bold"),bg="lightyellow").place(x=480,y=140,width=200)
-        self.txt_course=ttk.Combobox(self.root,textvariable=self.var_course,values=self.course_list,font=("goudy old style",15,"bold"),state='readonly',justify=CENTER)
-        self.txt_course.place(x=480,y=180,width=200)
-        self.txt_course.set("Select")
-        
+        txt_NID=Entry(self.root,textvariable=self.var_NID,font=("goudy old style",15,"bold"),bg="lightyellow").place(x=480,y=180,width=200)
+        #self.txt_course=ttk.Combobox(self.root,textvariable=self.var_course,values=self.course_list,font=("goudy old style",15,"bold"),state='readonly',justify=CENTER)
+        #self.txt_course.place(x=480,y=180,width=200)
+        #self.txt_course.set("Select")
+
         #------------ TexT Address -----------------
         self.txt_address=Text(self.root,font=("goudy old style",15,"bold"),bg="lightyellow")
         self.txt_address.place(x=150,y=260,width=540,height=100)
@@ -87,7 +88,7 @@ class Student:
 
         lbl_search_roll=Label(self.root,text="Roll No.",font=("goudy old style",15,"bold"),bg="white").place(x=720,y=60)
         txt_search_roll=Entry(self.root,textvariable=self.var_search,font=("goudy old style",15,"bold"),bg="lightyellow").place(x=870,y=60,width=180)
-        
+
         btn_search=Button(self.root,text="Search",command=self.search,font=("goudy old style",15,"bold"),bg="#03a9f4",fg="white",cursor="hand2").place(x=1070,y=60,width=120,height=28)
 
         #---------------- content -------------------
@@ -96,7 +97,7 @@ class Student:
 
         scrolly=Scrollbar(self.C_Frame,orient=VERTICAL)
         scrollx=Scrollbar(self.C_Frame,orient=HORIZONTAL)
-        self.StudentTable=ttk.Treeview(self.C_Frame,columns=("roll","name","email","gender","dob","contact","admission","course","state","city","pin","address"),xscrollcommand=scrollx.set,yscrollcommand=scrolly.set)
+        self.StudentTable=ttk.Treeview(self.C_Frame,columns=("roll","name","email","gender","dob","contact","admission","NID","country","city","zip","address"),xscrollcommand=scrollx.set,yscrollcommand=scrolly.set)
         scrollx.pack(side=BOTTOM,fill=X)
         scrolly.pack(side=RIGHT,fill=Y)
         scrollx.config(command=self.StudentTable.xview)
@@ -108,10 +109,10 @@ class Student:
         self.StudentTable.heading("dob",text="D.O.B.")
         self.StudentTable.heading("contact",text="Contact")
         self.StudentTable.heading("admission",text="Admission")
-        self.StudentTable.heading("course",text="Course")
-        self.StudentTable.heading("state",text="State")
+        self.StudentTable.heading("NID",text="NID")
+        self.StudentTable.heading("country",text="Country")
         self.StudentTable.heading("city",text="City")
-        self.StudentTable.heading("pin",text="Pin")
+        self.StudentTable.heading("zip",text="Zip")
         self.StudentTable.heading("address",text="Address")
         self.StudentTable["show"]='headings'
         self.StudentTable.column("roll",width=100)
@@ -121,10 +122,10 @@ class Student:
         self.StudentTable.column("dob",width=100)
         self.StudentTable.column("contact",width=100)
         self.StudentTable.column("admission",width=100)
-        self.StudentTable.column("course",width=100)
-        self.StudentTable.column("state",width=100)
+        self.StudentTable.column("NID",width=100)
+        self.StudentTable.column("country",width=100)
         self.StudentTable.column("city",width=100)
-        self.StudentTable.column("pin",width=100)
+        self.StudentTable.column("zip",width=100)
         self.StudentTable.column("address",width=200)
         self.StudentTable.pack(fill=BOTH,expand=1)
         self.StudentTable.bind("<ButtonRelease-1>",self.get_data)
@@ -143,7 +144,7 @@ class Student:
                 if row!=None:
                     messagebox.showerror("Error","Roll Number akready present",parent=self.root)
                 else:
-                    cur.execute("insert into student (roll,name,email,gender,dob,contact,admission,course,state,city,pin,address) values(?,?,?,?,?,?,?,?,?,?,?,?)",(
+                    cur.execute("insert into student (roll,name,email,gender,dob,contact,admission,NID,country,city,zip,address) values(?,?,?,?,?,?,?,?,?,?,?,?)",(
                         self.var_roll.get(),
                         self.var_name.get(),
                         self.var_email.get(),
@@ -151,10 +152,10 @@ class Student:
                         self.var_dob.get(),
                         self.var_contact.get(),
                         self.var_a_date.get(),
-                        self.var_course.get(),
-                        self.var_state.get(),
+                        self.var_NID.get(),
+                        self.var_country.get(),
                         self.var_city.get(),
-                        self.var_pin.get(),
+                        self.var_zip.get(),
                         self.txt_address.get("1.0",END)
                     ))
                     con.commit()
@@ -213,10 +214,10 @@ class Student:
         self.var_dob.set(row[4])
         self.var_contact.set(row[5])
         self.var_a_date.set(row[6])
-        self.var_course.set(row[7])
-        self.var_state.set(row[8])
+        self.var_NID.set(row[7])
+        self.var_country.set(row[8])
         self.var_city.set(row[9])
-        self.var_pin.set(row[10])
+        self.var_zip.set(row[10])
         self.txt_address.delete("1.0",END)
         self.txt_address.insert(END,row[11])
 
@@ -232,17 +233,17 @@ class Student:
                 if row==None:
                     messagebox.showerror("Error","Select Student from list",parent=self.root)
                 else:
-                    cur.execute("update student set name=?,email=?,gender=?,dob=?,contact=?,admission=?,course=?,state=?,city=?,pin=?,address=? where roll=?",(
+                    cur.execute("update student set name=?,email=?,gender=?,dob=?,contact=?,admission=?,NID=?,country=?,city=?,zip=?,address=? where roll=?",(
                         self.var_name.get(),
                         self.var_email.get(),
                         self.var_gender.get(),
                         self.var_dob.get(),
                         self.var_contact.get(),
                         self.var_a_date.get(),
-                        self.var_course.get(),
-                        self.var_state.get(),
+                        self.var_NID.get(),
+                        self.var_country.get(),
                         self.var_city.get(),
-                        self.var_pin.get(),
+                        self.var_zip.get(),
                         self.txt_address.get("1.0",END),
                         self.var_roll.get(),
                     ))
@@ -261,38 +262,45 @@ class Student:
         self.var_dob.set("")
         self.var_contact.set("")
         self.var_a_date.set("")
-        self.var_course.set("Select")
-        self.var_state.set("")
+        self.var_NID.set("")
+        self.var_country.set("")
         self.var_city.set("")
-        self.var_pin.set("")
+        self.var_zip.set("")
         self.var_search.set("")
         self.txt_address.delete("1.0",END)
         self.txt_roll.config(state=NORMAL)
 
     def delete(self):
-        con=sqlite3.connect(database="rms.db")
-        cur=con.cursor()
+        con = sqlite3.connect(database="rms.db")
+        cur = con.cursor()
         try:
-            if self.var_roll.get()=="":
-                messagebox.showerror("Error","Roll No should be required",parent=self.root)
+            if self.var_roll.get() == "":
+                messagebox.showerror("Error", "Roll No should be required", parent=self.root)
             else:
-                cur.execute("select * from student where roll=?",(self.var_roll.get(),))
-                row=cur.fetchone()
-                if row==None:
-                    messagebox.showerror("Error","Please select student from the list",parent=self.root)
+                # Check if the student exists in the database
+                cur.execute("SELECT * FROM student WHERE roll=?", (self.var_roll.get(),))
+                student_row = cur.fetchone()
+                if student_row is None:
+                    messagebox.showerror("Error", "Please select a valid student from the list", parent=self.root)
                 else:
-                    op=messagebox.askyesno("Confirm","Do you really want to delete?",parent=self.root)
-                    if op==True:
-                        cur.execute("delete from student where roll=?",(self.var_roll.get(),))
+                    # Confirm deletion
+                    op = messagebox.askyesno("Confirm", "Do you really want to delete the student and their results?",
+                                             parent=self.root)
+                    if op:
+                        # Delete student from the 'student' table
+                        cur.execute("DELETE FROM student WHERE roll=?", (self.var_roll.get(),))
+                        # Delete related results from the 'result' table
+                        cur.execute("DELETE FROM result WHERE roll=?", (self.var_roll.get(),))
                         con.commit()
-                        messagebox.showinfo("Delete","Student Deleted Successfully",parent=self.root)
+                        messagebox.showinfo("Delete", "Student and their results deleted successfully",
+                                            parent=self.root)
                         self.clear()
         except Exception as ex:
-            messagebox.showerror("Error",f"Error due to: {str(ex)}")
+            messagebox.showerror("Error", f"Error due to: {str(ex)}")
+        finally: 
+            con.close()
 
-        
-
-if __name__=="__main__":
+if __name__ == "__main__":
     root=Tk()
     obj=Student(root)
     root.mainloop()
