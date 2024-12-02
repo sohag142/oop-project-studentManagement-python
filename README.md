@@ -72,6 +72,7 @@ This project includes 6 python scripts that demonstrate how to interact with a G
 ### Pre-Requisites
 Ensure that you have the following Python Pakages installed in your PC:
 - `pillow`: `pip install pillow`
+- <h6>sqllite3 extention install for vs code </h6>
 
 ### Configuration
 - Before running `dashboard.py`, make sure first to run `create_db.py` file and create a folder named `images`.
