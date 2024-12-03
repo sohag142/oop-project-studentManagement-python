@@ -106,7 +106,7 @@ login_window.geometry("700x500+410+100")
 login_window.configure(bg="#1e293b")
 
 # Login Frame
-login_frame = Frame(login_window, padx=20, pady=20, bg="#ffffff", bd=5, relief=RIDGE)
+login_frame = Frame(login_window, padx=130, pady=80, bg="#ffffff", bd=5, relief=RIDGE)
 login_frame.pack()
 
 Label(login_frame, text="Login", font=("Helvetica", 18, "bold"), bg="#ffffff", fg="#1e293b").pack(pady=10)
